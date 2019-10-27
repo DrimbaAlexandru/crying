@@ -1,0 +1,5 @@
+Embedded systems actors & transitions:
+    https://docs.google.com/document/d/1yRju1aiaesmaVJFgtx8gQIpDfIqd4iUr_Mis3p29U5k/edit
+    
+JSpin documentation:
+    http://www.inf.u-szeged.hu/~gombas/HSRV/jspin-user.pdf
