@@ -79,8 +79,8 @@ active proctype Sprinkler() {
 }
 
 
-ltl { []( currentMoistureValue >= 0 && currentMoistureValue <= 100 ) }
+//ltl { []( currentMoistureValue >= 0 && currentMoistureValue <= 100 ) }
 
-ltl { ( currentMoistureValue <= 40 -> <>( sprinklerWatering == true ) ) }
+//ltl { []( currentMoistureValue <= 40 -> <>( sprinklerWatering == true ) ) }
 
-ltl { []( currentMoistureValue >= 80 -> <>( sprinklerWatering == false ) ) }
+//ltl { []( currentMoistureValue >= 80 -> <>( sprinklerWatering == false ) ) }
