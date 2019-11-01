@@ -1,0 +1,21 @@
+(Spin Version 6.0.0 -- 5 December 2010)
+	+ Partial Order Reduction
+Full statespace search for:
+	never claim         	- (none specified)
+	assertion violations	+
+	cycle checks       	- (disabled by -DSAFETY)
+	invalid end states	+
+State-vector 32 byte, depth reached 153, ••• errors: 0 •••
+     2243 states, stored
+     2174 states, matched
+     4417 transitions (= stored+matched)
+      324 atomic steps
+hash conflicts:         0 (resolved)
+    2.195	memory usage (Mbyte)
+unreached in proctype WaterTap
+	smart_tap_2.pml:53, state 32, "-end-"
+	(1 of 32 states)
+unreached in proctype User
+	smart_tap_2.pml:103, state 41, "-end-"
+	(1 of 41 states)
+pan: elapsed time 0 seconds

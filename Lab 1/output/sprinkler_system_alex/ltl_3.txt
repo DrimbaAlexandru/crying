@@ -1,0 +1,29 @@
+warning: for p.o. reduction to be valid the never claim must be stutter-invariant
+(never claims generated from LTL formulae are stutter-invariant)
+(Spin Version 6.0.0 -- 5 December 2010)
+	+ Partial Order Reduction
+Full statespace search for:
+	never claim         	+
+	assertion violations	+ (if within scope of claim)
+	acceptance   cycles 	+ (fairness disabled)
+	invalid end states	- (disabled by never claim)
+State-vector 52 byte, depth reached 229, ••• errors: 0 •••
+      107 states, stored (113 visited)
+      272 states, matched
+      385 transitions (= visited+matched)
+     1303 atomic steps
+hash conflicts:         0 (resolved)
+    2.195	memory usage (Mbyte)
+unreached in proctype Controller
+	sprinkler_system_alex.pml:29, state 16, "-end-"
+	(1 of 16 states)
+unreached in proctype SoilMoistureSensor
+	sprinkler_system_alex.pml:60, state 36, "-end-"
+	(1 of 36 states)
+unreached in proctype Sprinkler
+	sprinkler_system_alex.pml:79, state 14, "-end-"
+	(1 of 14 states)
+unreached in claim ltl_0
+	_spin_nvr.tmp:10, state 11, "-end-"
+	(1 of 11 states)
+pan: elapsed time 0 seconds
