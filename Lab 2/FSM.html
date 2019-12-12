@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FSM</title>
+  <link rel="stylesheet" href="https://stackedit.io/style.css" />
+</head>
+
+<body class="stackedit">
+  <div class="stackedit__html"><h1 id="smart-gardner">Smart Gardner</h1>
+<p><strong>Smart Gardner</strong>  is an embedded system that periodically monitors the state of a houseplant by reading sensor values from two different sensors: a soil humidity sensor and a temperature sensor. The system consists of an <em>Arduino Uno</em> development board, a <em>soil moisture sensor</em>, a <em>temperature sensor</em>, a <em>16x2 LCD display</em>, a <em>breadboard</em>, and <em>connectors</em>.</p>
+<h2 id="system-logic">System logic</h2>
+<p>The system’s goal is to inform its user about the houseplant’s state by using the sensor data to compute the overall state of the plant. Based on predefined thresholds for soil humidity (<code>HUM_THRESHOLD_*</code>, where * = 0, 1, 2, 3) and room temperature (<code>TEMP_THRESHOLD_*</code>, where * = 0, 1, 2, 3), the overall state can be either of the following: <code>HAPPY</code>, <code>OK</code> and <code>SAD</code>. The data from each sensor is mapped to a <code>BAD</code>/<code>OK</code>/<code>EXCELLENT</code> state (see fig. 1), and the overall state is computed as being the worse of the sensor states (i.e., if the temperature is <em>excellent</em> but the moisture is <em>bad</em>, the plant is <em>sad</em>). The overall state, the temperature and soil moisture values are all displayed on the LCD.</p>
+<p><img src="https://imgur.com/cL6CU3U.png" alt="Imgur"></p>
+<p><img src="https://imgur.com/oSPBMGF.png" alt="Imgur1"><br>
+<em>Fig.1. Thresholds</em></p>
+<h2 id="components">Components</h2>
+<p>For the development of the system, we used two sensors and an LCD, the use of which is described below.</p>
+<h3 id="sensors">Sensors</h3>
+<p>Two sensors were used to create the system: <strong>soil moisture sensor</strong> and <strong>temperature sensor</strong>. Both implementations (<em>noFSM</em> and <em>withFSM</em>) use these sensors in the same way, with the following methods being identical:</p>
+<ol>
+<li><code>readHumidityPercentage()</code> reads the value of soil moisture. The values ​​determined by this sensor are between 0 (meaning maximum humidity) and 1023 (representing the lack of humidity). For later use, these values ​​were mapped to percentages (0 - 100%);</li>
+<li><code>readSensorTemperature()</code> determines the temperature in the air on Celsius scale (°C).</li>
+</ol>
+<p>In both methods, an average of 100 values ​​read by the sensor is calculated, to ensure that the value is as consistent with the reality as possible.</p>
+<h3 id="lcd-display">LCD display</h3>
+<p>An 16x2 LCD was used to display the values ​​determined through the sensors, but also the state of the plant. For the display on this LCD were also used common methods between the two implementations.</p>
+<ol>
+<li><code>void displayHumidityAndTemp(int humidityPercentage, float temperature)</code><br>
+displays the percentage of soil moisture read by the sensor and temperature;</li>
+<li><code>setCustomChars()</code> is a method that sets custom characters for the LCD. A maximum of 8 such characters can be set on the LCD. An LCD display is made up of blocks, which are fundamentally <strong>5</strong> dots in a row and <strong>8</strong> dots in a column, which are lighted up according to the code or predefined characters inside the LCD Control IC. Such a character is described by a byte array of size 8, each element describing which of the 5 dots from a column is lit:</li>
+</ol>
+<pre><code>byte happy1[] = {B00000, B00110, B01001, B00000, B00000, B00000, B00000, B00000};
+lcd.createChar(0, happy1);
+</code></pre>
+<ol start="4">
+<li><code>displayHappyEmoticon()</code>, <code>displayOkEmoticon()</code> and <code>displaySadEmoticon()</code> are methods that display the custom characters that form emoticons that describe the state of the plant.</li>
+</ol>
+<h2 id="nofsm--fsm">NoFSM &amp; FSM</h2>
+<h3 id="nofsm-implementation">NoFSM implementation</h3>
+<p>The implementation of <em>noFSM</em> uses the specific method of the <code>void loop()</code> in which it reads the moisture for soil and temperature, calculates the final state of the plant (bad, good, excellent) and depending on the result, it is displayed properly on the LCD.</p>
+<h3 id="fsm-implementation">FSM implementation</h3>
+<p>In the <em>FSM</em> implementation, 4 different states are used:</p>
+<ol>
+<li><code>STATE_ACQUIRE_DATA</code> in which the values ​​of the sensors are read, the state of the plant is calculated and, according to this, the state of the FSM changes. This is the only state of the FSM in which there is a logic that determines the next state of the FSM.</li>
+<li><code>STATE_HAPPY_PLANT</code>, <code>STATE_OK_PLANT</code>, <code>STATE_SAD PLANT</code> are states in which the emoticon corresponding to the state of the plant and the values ​​of the sensors are displayed. After a delay of <code>WAIT_TIME</code>, the FSM returns to the<code>STATE_ACQUIRE_DATA</code> state.</li>
+</ol>
+<p>Next can be seen a diagram describing the FSM:<br>
+<img src="https://imgur.com/rIVqyE8.png" alt="alt "></p>
+</div>
+</body>
+
+</html>

@@ -55,7 +55,7 @@ int readHumidityPercentage() {
     sensorValue = sensorValue + analogRead(humidityPin);
   }
   sensorValue = sensorValue/100.0; 
-  int percentage = map(sensorValue,1023,0,0,100);
+  int percentage = map(sensorValue,1023,500,0,100);
   return percentage;
 }
 
@@ -78,43 +78,31 @@ int calculateState(int percentage, int t0, int t1, int t2, int t3) {
 }
 
 void loop() {
-  switch(fsmState) {
-    case STATE_ACQUIRE_DATA:
-      Serial.println("Acquiring data...");
-      humidityPercentage = readHumidityPercentage();
-      humidityState = calculateState(humidityPercentage, HUM_THRESHOLD_0, HUM_THRESHOLD_1, HUM_THRESHOLD_2, HUM_THRESHOLD_3);
-      temperature = readSensorTemperature();
-      temperatureState = calculateState(temperature, TEMP_THRESHOLD_0, TEMP_THRESHOLD_1, TEMP_THRESHOLD_2, TEMP_THRESHOLD_3);
-      state = min(humidityState, temperatureState);
-      if(state == BAD) { fsmState = STATE_SAD_PLANT; } 
-      else if(state == GOOD) { fsmState = STATE_OK_PLANT; }
-      else { fsmState = STATE_HAPPY_PLANT; }
-      break;
-      
-    case STATE_HAPPY_PLANT:
-      Serial.println("Plant entered happy state...");
+    Serial.println("Acquiring data...");
+    humidityPercentage = readHumidityPercentage();
+    humidityState = calculateState(humidityPercentage, HUM_THRESHOLD_0, HUM_THRESHOLD_1, HUM_THRESHOLD_2, HUM_THRESHOLD_3);
+    
+    temperature = readSensorTemperature();
+    temperatureState = calculateState(temperature, TEMP_THRESHOLD_0, TEMP_THRESHOLD_1, TEMP_THRESHOLD_2, TEMP_THRESHOLD_3);
+    
+    state = min(humidityState, temperatureState);
+    
+    if(state == BAD) { 
+      Serial.println("Plant is happy...");
       displayHappyEmoticon();      
       displayHumidityAndTemp(humidityPercentage, temperature);
-      delay(WAIT_TIME);
-      fsmState = STATE_ACQUIRE_DATA;
-      break;
-      
-    case STATE_OK_PLANT:
-      Serial.println("Plant entered ok state...");
+    } 
+    else if(state == GOOD) { 
+      Serial.println("Plant is ok...");
       displayOkEmoticon();
       displayHumidityAndTemp(humidityPercentage, temperature);
-      delay(WAIT_TIME);
-      fsmState = STATE_ACQUIRE_DATA;
-      break;
-      
-    case STATE_SAD_PLANT:
-      Serial.println("Plant entered sad state...");
+    }
+    else { 
+      Serial.println("Plant is sad...");
       displaySadEmoticon();
       displayHumidityAndTemp(humidityPercentage, temperature);
-      delay(WAIT_TIME);
-      fsmState = STATE_ACQUIRE_DATA;
-      break;
-  }
+    }
+    delay(WAIT_TIME);    
 }
 
 void displayHumidityAndTemp(int humidityPercentage, float temperature) {
@@ -132,7 +120,7 @@ void displayHumidityAndTemp(int humidityPercentage, float temperature) {
   lcd.print("C");
 }
 
-void displayHappyEmoticon() {
+void displayHappyEmoticon(void) {
   lcd.clear();
     
   lcd.write((uint8_t)0);
@@ -140,7 +128,7 @@ void displayHappyEmoticon() {
   lcd.write((uint8_t)2);
 }
 
-void displayOkEmoticon() {
+void displayOkEmoticon(void) {
   lcd.clear();
   
   lcd.write((uint8_t)3);
@@ -148,7 +136,7 @@ void displayOkEmoticon() {
   lcd.write((uint8_t)5);
 }
 
-void displaySadEmoticon() {
+void displaySadEmoticon(void) {
   lcd.clear();
     
   lcd.write((uint8_t)6);
@@ -156,7 +144,7 @@ void displaySadEmoticon() {
   lcd.write((uint8_t)6);
 }
 
-void setCustomChars() {
+void setCustomChars(void) {
   byte happy1[] = {B00000, B00110, B01001, B00000, B00000, B00000, B00000, B00000};
   byte happy2[] = {B00000, B00000, B00000, B00000, B00000, B10001, B01110, B00000};
   byte happy3[] = {B00000, B01100, B10010, B00000, B00000, B00000, B00000, B00000};
