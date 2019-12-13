@@ -40,6 +40,7 @@ In the _FSM_ implementation, 4 different states are used:
 2. `STATE_HAPPY_PLANT`, `STATE_OK_PLANT`, `STATE_SAD PLANT` are states in which the emoticon corresponding to the state of the plant and the values ​​of the sensors are displayed. After a delay of `WAIT_TIME`, the FSM returns to the` STATE_ACQUIRE_DATA` state.
 
 Next can be seen a diagram describing the FSM:
+
 ![alt ](https://imgur.com/rIVqyE8.png)
 
 
