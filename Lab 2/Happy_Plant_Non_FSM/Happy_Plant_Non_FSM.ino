@@ -55,7 +55,7 @@ int readHumidityPercentage() {
     sensorValue = sensorValue + analogRead(humidityPin);
   }
   sensorValue = sensorValue/100.0; 
-  int percentage = map(sensorValue,1023,500,0,100);
+  int percentage = map(sensorValue,1023,0,0,100);
   return percentage;
 }
 
