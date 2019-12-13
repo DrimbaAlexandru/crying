@@ -1,5 +1,5 @@
-﻿# Smart Gardner
-**Smart Gardner**  is an embedded system that periodically monitors the state of a houseplant by reading sensor values from two different sensors: a soil humidity sensor and a temperature sensor. The system consists of an *Arduino Uno* development board, a *soil moisture sensor*, a *temperature sensor*, a *16x2 LCD display*, a *breadboard*, and *connectors*.
+﻿# Plant to Emoticon Translator
+**Plant to Emoticon Translator**  is an embedded system that periodically monitors the state of a houseplant by reading sensor values from two different sensors: a soil humidity sensor and a temperature sensor. The system consists of an *Arduino Uno* development board, a *soil moisture sensor*, a *temperature sensor*, a *16x2 LCD display*, a *breadboard*, and *connectors*.
 
 ## System logic
 The system’s goal is to inform its user about the houseplant’s state by using the sensor data to compute the overall state of the plant. Based on predefined thresholds for soil humidity (`HUM_THRESHOLD_*`, where * = 0, 1, 2, 3) and room temperature (`TEMP_THRESHOLD_*`, where * = 0, 1, 2, 3), the overall state can be either of the following: `HAPPY`, `OK` and `SAD`. The data from each sensor is mapped to a `BAD`/`OK`/`EXCELLENT` state (see fig. 1), and the overall state is computed as being the worse of the sensor states (i.e., if the temperature is *excellent* but the moisture is *bad*, the plant is *sad*). The overall state, the temperature and soil moisture values are all displayed on the LCD.
@@ -40,7 +40,6 @@ In the _FSM_ implementation, 4 different states are used:
 2. `STATE_HAPPY_PLANT`, `STATE_OK_PLANT`, `STATE_SAD PLANT` are states in which the emoticon corresponding to the state of the plant and the values ​​of the sensors are displayed. After a delay of `WAIT_TIME`, the FSM returns to the` STATE_ACQUIRE_DATA` state.
 
 Next can be seen a diagram describing the FSM:
-
 ![alt ](https://imgur.com/rIVqyE8.png)
 
 

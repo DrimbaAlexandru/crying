@@ -9,8 +9,8 @@
 </head>
 
 <body class="stackedit">
-  <div class="stackedit__html"><h1 id="smart-gardner">Smart Gardner</h1>
-<p><strong>Smart Gardner</strong>  is an embedded system that periodically monitors the state of a houseplant by reading sensor values from two different sensors: a soil humidity sensor and a temperature sensor. The system consists of an <em>Arduino Uno</em> development board, a <em>soil moisture sensor</em>, a <em>temperature sensor</em>, a <em>16x2 LCD display</em>, a <em>breadboard</em>, and <em>connectors</em>.</p>
+  <div class="stackedit__html"><h1 id="plant-to-emoticon-translator">Plant to Emoticon Translator</h1>
+<p><strong>Plant to Emoticon Translator</strong>  is an embedded system that periodically monitors the state of a houseplant by reading sensor values from two different sensors: a soil humidity sensor and a temperature sensor. The system consists of an <em>Arduino Uno</em> development board, a <em>soil moisture sensor</em>, a <em>temperature sensor</em>, a <em>16x2 LCD display</em>, a <em>breadboard</em>, and <em>connectors</em>.</p>
 <h2 id="system-logic">System logic</h2>
 <p>The system’s goal is to inform its user about the houseplant’s state by using the sensor data to compute the overall state of the plant. Based on predefined thresholds for soil humidity (<code>HUM_THRESHOLD_*</code>, where * = 0, 1, 2, 3) and room temperature (<code>TEMP_THRESHOLD_*</code>, where * = 0, 1, 2, 3), the overall state can be either of the following: <code>HAPPY</code>, <code>OK</code> and <code>SAD</code>. The data from each sensor is mapped to a <code>BAD</code>/<code>OK</code>/<code>EXCELLENT</code> state (see fig. 1), and the overall state is computed as being the worse of the sensor states (i.e., if the temperature is <em>excellent</em> but the moisture is <em>bad</em>, the plant is <em>sad</em>). The overall state, the temperature and soil moisture values are all displayed on the LCD.</p>
 <p><img src="https://imgur.com/cL6CU3U.png" alt="Imgur"></p>
